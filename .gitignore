@@ -1,0 +1,12 @@
+# Docker
+*.tar
+
+# Helm build
+*.tgz
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store

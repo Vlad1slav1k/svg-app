@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black;color:white;text-align:center">
+
+<h1>SVG App</h1>
+
+<button onclick="clickBtn(1)">Explore</button>
+<button onclick="clickBtn(2)">Watch</button>
+<button onclick="clickBtn(3)">Fight</button>
+<button onclick="clickBtn(4)">Chihuahua</button>
+<button onclick="clickBtn(5)">Slideshow</button>
+
+<p id="status"></p>
+
+<button onclick="loadStats()">Show Stats</button>
+
+<pre id="stats"></pre>
+
+<script>
+function clickBtn(id) {
+  fetch("/api/click/" + id, { method: "POST" })
+    .then(() => {
+      document.getElementById("status").innerText = "Clicked button " + id;
+
+      if (id === 5) {
+        window.location.href = "/slideshow.html";
+      } else {
+        window.location.href = "/" + id + ".svg";
+      }
+    });
+}
+
+function loadStats() {
+  fetch("/api/stats")
+    .then(r => r.json())
+    .then(data => {
+      // ✅ transform data into readable string
+      const formatted = data.map(item => 
+        `Image ${item[0]}: ${item[1]} clicks`
+      ).join(", ");
+
+      document.getElementById("stats").innerText = formatted;
+    });
+}
+</script>
+
+
+</body>
+</html>

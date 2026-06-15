@@ -1,0 +1,69 @@
+<svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Body -->
+  <ellipse cx="150" cy="180" rx="70" ry="50" fill="#c68642">
+    <animateTransform attributeName="transform"
+      type="translate"
+      values="0 0; 0 -3; 0 0"
+      dur="1.5s"
+      repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Head -->
+  <circle cx="150" cy="110" r="60" fill="#d89b56"/>
+
+  <!-- Ears -->
+  <polygon points="100,60 120,10 140,70" fill="#c68642"/>
+  <polygon points="200,60 180,10 160,70" fill="#c68642"/>
+
+  <!-- Eyes -->
+  <ellipse cx="125" cy="110" rx="8" ry="10" fill="#000">
+    <animate attributeName="ry"
+      values="10;2;10"
+      dur="3s"
+      repeatCount="indefinite"/>
+  </ellipse>
+
+  <ellipse cx="175" cy="110" rx="8" ry="10" fill="#000">
+    <animate attributeName="ry"
+      values="10;2;10"
+      dur="3s"
+      repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Nose -->
+  <circle cx="150" cy="135" r="6" fill="#000"/>
+
+  <!-- Smile -->
+  <path d="M130 150 Q150 170 170 150"
+        stroke="#000"
+        stroke-width="3"
+        fill="none"/>
+
+  <!-- Tongue -->
+  <ellipse cx="150" cy="160" rx="8" ry="5" fill="#ff6b6b">
+    <animateTransform attributeName="transform"
+      type="translate"
+      values="0 0; 0 2; 0 0"
+      dur="0.8s"
+      repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Tail -->
+  <path d="M215 180 Q250 150 230 120"
+        stroke="#c68642"
+        stroke-width="8"
+        fill="none"
+        stroke-linecap="round">
+    <animateTransform attributeName="transform"
+      type="rotate"
+      values="0 215 180; 25 215 180; -10 215 180; 0 215 180"
+      dur="0.5s"
+      repeatCount="indefinite"/>
+  </path>
+
+  <!-- Legs -->
+  <rect x="110" y="210" width="15" height="40" fill="#c68642"/>
+  <rect x="175" y="210" width="15" height="40" fill="#c68642"/>
+
+</svg>
