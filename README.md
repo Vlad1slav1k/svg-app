@@ -69,7 +69,6 @@ Example:
 
 **4. Access applications**
 
-[
 http://myapp
 http://grafana
 
