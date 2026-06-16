@@ -53,6 +53,7 @@ PostgreSQL (PVC)
 ### 1. Clone repo
 
 git clone https://github.com/Vlad1slav1k/svg-app.git
+
 cd svg-app
 
 **2. Deploy application**
@@ -70,6 +71,7 @@ Example:
 **4. Access applications**
 
 http://myapp
+
 http://grafana
 
 **🔐 Grafana Login**   
