@@ -1,11 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: svg-app-ingress
+  name: app-ingress
 spec:
   rules:
-    - host: myapp
-      http:
+
+    # ✅ MAIN APP
+    - http:
         paths:
           - path: /
             pathType: Prefix
@@ -15,3 +16,26 @@ spec:
                 port:
                   number: 80
 
+    # ✅ GRAFANA
+    - host: grafana.myapp
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: monitoring-grafana
+                port:
+                  number: 80
+
+    # ✅ OPTIONAL API DIRECT ACCESS
+    - host: api.myapp
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8000

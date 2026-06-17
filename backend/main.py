@@ -2,7 +2,9 @@ from fastapi import FastAPI
 import psycopg2
 import time
 
+from prometheus_fastapi_instrumentator import Instrumentator
 app = FastAPI()
+Instrumentator().instrument(app).expose(app)
 
 def get_conn():
     try:
@@ -68,5 +70,4 @@ def stats():
     except Exception as e:
         print("❌ ERROR in stats:", e)
         return {"error": str(e)}
-
 
