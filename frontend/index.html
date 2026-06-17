@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="UTF-8">
+</head>
 <body style="background:black;color:white;text-align:center">
 
 <h1>SVG App</h1>
@@ -12,15 +15,55 @@
 
 <p id="status"></p>
 
+<h3>Statistics</h3>
+
 <button onclick="loadStats()">Show Stats</button>
 
-<pre id="stats"></pre>
+<div id="stats" style="margin-top:10px; font-family: monospace;"></div>
 
 <script>
+
+function loadStats() {
+  const statsDiv = document.getElementById("stats");
+
+  statsDiv.innerText = "Loading...";
+
+  fetch("/api/stats")
+    .then(r => r.json())
+    .then(data => {
+
+      if (!data || data.length === 0) {
+        statsDiv.innerText = "No clicks yet";
+        return;
+      }
+
+      data.sort((a, b) => b[1] - a[1]);
+
+      const max = Math.max(...data.map(item => item[1]));
+
+      const html = data.map(item => {
+        const highlight = item[1] === max ? "🔥 " : "";
+        return `<div>${highlight}Image ${item[0]}: ${item[1]} clicks</div>`;
+      }).join("");
+
+      statsDiv.innerHTML = html;
+    })
+    .catch(() => {
+      statsDiv.innerText = "Error loading stats";
+    });
+}
+
+setInterval(loadStats, 5000);
+
 function clickBtn(id) {
+  document.getElementById("status").innerText = "Processing...";
+
   fetch("/api/click/" + id, { method: "POST" })
     .then(() => {
-      document.getElementById("status").innerText = "Clicked button " + id;
+      document.getElementById("status").innerText =
+        "Clicked Image " + id;
+
+      loadStats();
 
       if (id === 5) {
         window.location.href = "/slideshow.html";
@@ -30,20 +73,7 @@ function clickBtn(id) {
     });
 }
 
-function loadStats() {
-  fetch("/api/stats")
-    .then(r => r.json())
-    .then(data => {
-      // ✅ transform data into readable string
-      const formatted = data.map(item => 
-        `Image ${item[0]}: ${item[1]} clicks`
-      ).join(", ");
-
-      document.getElementById("stats").innerText = formatted;
-    });
-}
 </script>
-
 
 </body>
 </html>
