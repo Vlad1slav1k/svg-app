@@ -1,0 +1,12 @@
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: "200m"
+    memory: "256Mi"
+
+autoscaling:
+  enabled: false
+
+image:
+  pullPolicy: IfNotPresent
