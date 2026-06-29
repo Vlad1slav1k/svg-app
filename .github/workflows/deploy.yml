@@ -1,0 +1,50 @@
+name: Deploy My App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Login to GHCR
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      # Build backend image
+      - name: Build backend
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest ./backend
+
+      - name: Push backend
+        run: docker push ghcr.io/${{ github.repository_owner }}/backend:latest
+
+      # Build frontend image
+      - name: Build frontend
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/frontend:latest ./frontend
+
+      - name: Push frontend
+        run: docker push ghcr.io/${{ github.repository_owner }}/frontend:latest
+
+      # Setup kubeconfig
+      - name: Setup kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+
+      # Install Helm
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      # Deploy
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install my-app ./helm-app
