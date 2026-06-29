@@ -17,21 +17,20 @@ jobs:
       - name: Login to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      # Build backend image
+      - name: Set lowercase repo name
+        run: echo "REPO=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build backend
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest ./backend
+        run: docker build -t ghcr.io/${{ env.REPO }}/backend:latest ./backend
 
       - name: Push backend
-        run: docker push ghcr.io/${{ github.repository_owner }}/backend:latest
+        run: docker push ghcr.io/${{ env.REPO }}/backend:latest
 
-      # Build frontend image
       - name: Build frontend
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/frontend:latest ./frontend
+        run: docker build -t ghcr.io/${{ env.REPO }}/frontend:latest ./frontend
 
       - name: Push frontend
-        run: docker push ghcr.io/${{ github.repository_owner }}/frontend:latest
+        run: docker push ghcr.io/${{ env.REPO }}/frontend:latest
 
       # Setup kubeconfig
       - name: Setup kubeconfig
