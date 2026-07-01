@@ -60,6 +60,7 @@ cd svg-app
 
 **2. Deploy application**
 
+```bash
 helm install my-app ./helm-app
 
 **3. Configure local domain**
