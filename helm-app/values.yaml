@@ -6,12 +6,12 @@ frontend:
   replicaCount: 2
   image:
     repository: ghcr.io/vlad1slav1k/frontend
-    tag: e1c6eb9
+    tag: b30e3eb
 backend:
   replicaCount: 2
   image:
     repository: ghcr.io/vlad1slav1k/backend
-    tag: e1c6eb9
+    tag: b30e3eb
 postgres:
   storage: 1Gi
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
