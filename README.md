@@ -1,7 +1,7 @@
 
 # 🚀 SVG App on Kubernetes
 
-A full-stack microservices application deployed on Kubernetes using Helm, featuring a frontend UI, backend API, PostgreSQL database with persistence, Ingress routing, and monitoring with Grafana/Prometheus.
+A full-stack microservices application deployed on Kubernetes using Helm, featuring a frontend UI, backend API, PostgreSQL database with persistence, Ingress routing, monitoring with Grafana/Prometheus, and automated CI/CD pipelines.
 
 ---
 
@@ -33,6 +33,7 @@ PostgreSQL (PVC)
 - ✅ Nginx (Frontend)
 - ✅ Traefik (Ingress)
 - ✅ Prometheus & Grafana (Monitoring)
+- ✅ GitHub Actions (CI/CD)
 
 ---
 
@@ -45,6 +46,7 @@ PostgreSQL (PVC)
 - 🌐 Custom domain (`http://myapp`)
 - 📈 Monitoring with Grafana dashboards
 - ⚙️ Helm-based deployment
+- 🚀 Automated CI/CD pipeline
 
 ---
 
@@ -78,7 +80,7 @@ http://grafana
 kubectl get secret monitoring-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 
-** Database Setup (first run only)**
+**** Database Setup (first run only)****
 
 kubectl exec -it <postgres-pod> -- psql -U postgres -d appdb   
 
@@ -102,4 +104,25 @@ Monitoring
 Prometheus collects cluster + app metrics
 Grafana provides dashboards
 Accessible via http://grafana
+
+
+
+# ⚙️ CI/CD Pipeline
+
+The project includes a GitHub Actions pipeline:
+
+### ✅ CI (Continuous Integration)
+- Builds Docker images for backend and frontend  
+- Tags images with commit SHA  
+- Pushes images to GitHub Container Registry (GHCR)
+
+### ✅ CD (Continuous Delivery)
+- Updates Helm `values.yaml` with new image versions  
+- Commits changes back to repository (GitOps-style)
+
+### 🔄 Deployment
+- Deployment is triggered locally via Helm:
+  
+```bash
+helm upgrade --install my-app ./helm-app
 
